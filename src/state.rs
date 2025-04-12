@@ -1707,7 +1707,7 @@ impl State {
 
     /// Return footer string.
     fn make_footer(&self, item: &ItemInfo) -> String {
-        let mut footer = String::new();
+        let mut footer: String;
         if item.file_type == FileType::Symlink {
             footer = " linked to: ".to_owned();
             match &item.symlink_dir_path {
