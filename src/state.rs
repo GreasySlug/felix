@@ -1161,8 +1161,9 @@ impl State {
         let visible = &self.list[..];
 
         visible.iter().enumerate().for_each(|(index, item)| {
-            if index >= self.layout.nums.skip.into()
-                && index < (self.layout.terminal_row + self.layout.nums.skip - BEGINNING_ROW).into()
+            if index >= usize::from(self.layout.nums.skip)
+                && index
+                    < usize::from(self.layout.terminal_row + self.layout.nums.skip - BEGINNING_ROW)
             {
                 move_to(3, (index as u16 + BEGINNING_ROW) - self.layout.nums.skip);
                 self.print_item(item);
@@ -1706,7 +1707,7 @@ impl State {
 
     /// Return footer string.
     fn make_footer(&self, item: &ItemInfo) -> String {
-        let mut footer = String::new();
+        let mut footer: String;
         if item.file_type == FileType::Symlink {
             footer = " linked to: ".to_owned();
             match &item.symlink_dir_path {
